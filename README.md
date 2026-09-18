@@ -2,50 +2,43 @@
 
 ## Project Overview
 
-This project uses machine learning to predict **biochemical recurrence** in prostate cancer patients.
+This project uses machine learning to explore prediction of biochemical recurrence in prostate cancer patients.
 
-The project includes data cleaning, preprocessing, exploratory analysis, feature encoding, model training, model evaluation, and feature importance analysis.
+The workflow covers data cleaning, preprocessing, exploratory analysis, feature encoding, model training, model evaluation, and feature importance analysis.
 
-Two classification models were tested:
+Two classification models were evaluated:
 
-* Logistic Regression
-* Random Forest
+- Logistic Regression
+- Random Forest
 
 The models were compared using Accuracy, Precision, Recall, F1 Score, and ROC-AUC.
 
-## Project Goal
-
-The main goal is to build a machine learning model that can classify patients based on the target variable:
-
-* **No Recurrence**
-* **Recurrence**
-
-This project is an educational machine learning project and is not intended for medical diagnosis or clinical use.
+> **Note:** This is an educational machine learning project. It is not intended for medical diagnosis or clinical use.
 
 ## Dataset
 
 The original dataset contains:
 
-* **505 rows**
-* **69 columns**
+- 505 rows
+- 69 columns
 
-After removing metadata and records without the target value, the final dataset contains:
+After removing metadata and records without the target value, the working dataset contains:
 
-* **431 patients**
-* **47 initial features**
+- 431 patients
+- 47 initial features
 
 The target variable is:
 
 `Biochemical Recurrence Indicator`
 
-The target values were converted to:
+Target values were converted to:
 
-* `NO` → 0
-* `YES` → 1
+- `NO` → 0
+- `YES` → 1
 
 ## Data Preprocessing
 
-The following preprocessing steps were used:
+The notebook follows these main steps:
 
 1. Load the prostate dataset from a TSV file.
 2. Remove metadata rows.
@@ -60,82 +53,66 @@ The following preprocessing steps were used:
 11. Split the data into training and testing sets.
 12. Standardize features for Logistic Regression.
 
-After preprocessing and encoding, the dataset contained **97 features**.
+After preprocessing and encoding, the dataset contains 97 features.
 
-## Machine Learning Models
+## Models and Results
 
 ### Logistic Regression
 
-Logistic Regression was used as a baseline classification model.
-
-Results:
-
-* Accuracy: **87.36%**
-* Precision: **54.55%**
-* Recall: **50.00%**
-* F1 Score: **52.17%**
-* ROC-AUC: **0.888**
+- Accuracy: **87.36%**
+- Precision: **54.55%**
+- Recall: **50.00%**
+- F1 Score: **52.17%**
+- ROC-AUC: **0.888**
 
 ### Random Forest
 
-Random Forest was used as a tree-based classification model with **200 trees**.
+A Random Forest model with 200 trees was also evaluated.
 
-Results:
+- Accuracy: **91.95%**
+- Precision: **100.00%**
+- Recall: **41.67%**
+- F1 Score: **58.82%**
+- ROC-AUC: **0.989**
 
-* Accuracy: **91.95%**
-* Precision: **100.00%**
-* Recall: **41.67%**
-* F1 Score: **58.82%**
-* ROC-AUC: **0.989**
+### Comparison
 
-## Model Comparison
+| Model | Accuracy | Precision | Recall | F1 Score | ROC-AUC |
+|---|---:|---:|---:|---:|---:|
+| Logistic Regression | 87.36% | 54.55% | 50.00% | 52.17% | 0.888 |
+| Random Forest | 91.95% | 100.00% | 41.67% | 58.82% | 0.989 |
 
-| Model               |   Accuracy |   Precision | Recall |   F1 Score |   ROC-AUC |
-| ------------------- | ---------: | ----------: | -----: | ---------: | --------: |
-| Logistic Regression |     87.36% |      54.55% | 50.00% |     52.17% |     0.888 |
-| **Random Forest**   | **91.95%** | **100.00%** | 41.67% | **58.82%** | **0.989** |
+The reported test results show that Random Forest produced a higher ROC-AUC, accuracy, and F1 score on this particular train/test split. However, its recurrence-class recall was 41.67%, so it did not identify all recurrence cases.
 
-## Best Model
-
-The **Random Forest** model achieved the highest ROC-AUC score:
-
-**ROC-AUC: 0.989**
-
-It also achieved the highest accuracy and F1 score among the tested models.
-
-However, the Recall for the Recurrence class was **41.67%**. This means the model did not identify all recurrence cases in the test set.
-
-Because the dataset contains fewer recurrence cases than no-recurrence cases, Accuracy alone should not be used to judge the model.
+Because the classes are imbalanced, accuracy and ROC-AUC should be considered together with class-specific metrics such as recall and F1 score.
 
 ## Visualizations
 
-The notebook includes several visualizations:
+The notebook includes:
 
-* Biochemical Recurrence Distribution
-* Confusion Matrix
-* ROC Curve
-* Top 15 Important Features
-
-The feature importance analysis shows which features were most important for the Random Forest model.
+- Biochemical Recurrence Distribution
+- Confusion Matrix
+- ROC Curve
+- Top 15 Random Forest Feature Importances
 
 ## Project Structure
 
 ```text
 predict_prostat/
-│
 ├── main.ipynb
 ├── prostat.tsv
+├── .gitignore
 └── README.md
 ```
 
 ## Technologies
 
-* Python
-* Pandas
-* NumPy
-* Matplotlib
-* Scikit-learn
-* Jupyter Notebook
+- Python
+- Pandas
+- NumPy
+- Matplotlib
+- Scikit-learn
+- Jupyter Notebook
 
 ## How to Run
 
@@ -146,69 +123,56 @@ git clone https://github.com/OmidDevAi/predict_prostat.git
 cd predict_prostat
 ```
 
-### 2. Create a virtual environment
+### 2. Create and activate a virtual environment
 
 ```bash
 python -m venv .venv
 ```
 
-### 3. Activate the environment
-
 Windows PowerShell:
 
 ```powershell
-.\.venv\Scripts\Activate.ps1
+.\\.venv\\Scripts\\Activate.ps1
 ```
 
-### 4. Install the required packages
+### 3. Install dependencies
 
 ```bash
 pip install pandas numpy matplotlib scikit-learn jupyter
 ```
 
-### 5. Open the notebook
+### 4. Open the notebook
 
 ```bash
 jupyter notebook
 ```
 
-Then open:
-
-```text
-main.ipynb
-```
+Then open `main.ipynb`.
 
 ## Limitations
 
-This project has several limitations:
-
-* The dataset is relatively small.
-* The recurrence class contains fewer samples than the no-recurrence class.
-* Only two machine learning models were tested.
-* The evaluation uses a single train-test split.
-* No external clinical validation was performed.
-* The model is not designed for medical diagnosis.
+- The dataset is relatively small.
+- The recurrence class contains fewer samples than the no-recurrence class.
+- Only two classification models are included in this notebook.
+- The reported metrics come from a single train/test split.
+- No external clinical validation was performed.
+- The model is not designed for medical diagnosis.
 
 ## Future Improvements
 
-Possible future improvements include:
-
-* Test additional classification algorithms.
-* Use stratified cross-validation.
-* Handle class imbalance with appropriate methods.
-* Perform hyperparameter tuning.
-* Compare additional evaluation metrics.
-* Improve feature engineering.
-* Add model explainability.
-* Create a simple prediction application.
+- Add stratified cross-validation.
+- Test additional classification algorithms.
+- Address class imbalance with appropriate methods.
+- Tune model hyperparameters.
+- Compare additional evaluation metrics.
+- Improve feature engineering.
+- Add model explainability.
 
 ## Key Takeaway
 
-This project demonstrates a complete machine learning classification workflow using a prostate cancer dataset.
+This project demonstrates a complete, practical classification workflow: loading real-world tabular data, cleaning and preprocessing it, training multiple models, evaluating class-specific performance, and examining feature importance.
 
-The **Random Forest** model achieved the best ROC-AUC score of **0.989** among the tested models.
-
-The project also shows why multiple evaluation metrics are important, especially when the target classes are not balanced.
+The results also show why a single metric should not be used to evaluate a classification model when the target classes are imbalanced.
 
 ## Author
 
